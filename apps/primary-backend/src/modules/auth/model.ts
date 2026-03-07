@@ -17,7 +17,7 @@ export const AuthModel = {
     password: t.String(),
   }),
   signUpResponseSchema: t.Object({
-    id: t.String(),
+    id: t.Number(),
   }),
   signUpFailedSchema: t.Object({
     message: t.Literal("Error while signing up"),

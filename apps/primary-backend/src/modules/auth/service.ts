@@ -7,7 +7,7 @@ export abstract class AuthService {
   static async singinService({
     email,
     password,
-  }: signInRequestSchema): Promise<{ isValidUser: boolean; id?: string }> {
+  }: signInRequestSchema): Promise<{ isValidUser: boolean; id?: number }> {
     const user = await prisma.user.findFirst({ where: { email } });
     if (!user) {
       return { isValidUser: false };
@@ -20,15 +20,15 @@ export abstract class AuthService {
     if (!isAuthenticate) {
       return { isValidUser: false };
     }
-    return { isValidUser: true, id: user.id.toString() };
+    return { isValidUser: true, id: user.id };
   }
   static async singupService({
     email,
     password,
-  }: signUpRequestSchema): Promise<{ id: string }> {
+  }: signUpRequestSchema): Promise<{ id: number }> {
     const user = await prisma.user.create({
       data: { email, password: await Bun.password.hash(password, HASH_ALGO) },
     });
-    return { id: user.id.toString() };
+    return { id: user.id };
   }
 }

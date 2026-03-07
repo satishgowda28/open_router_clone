@@ -7,7 +7,7 @@ export const auth = new Elysia({ prefix: "/auth" })
   .use(
     jwt({
       name: "jwt",
-      secret: process.env.JWT_SCRETE!,
+      secret: process.env.JWT_SECRETE!,
       exp: "7d",
     }),
   )
