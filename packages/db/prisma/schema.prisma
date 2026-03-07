@@ -11,7 +11,6 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  
 }
 
 model User {
@@ -25,14 +24,16 @@ model User {
 }
 
 model ApiKey {
-  id            Int            @id @default(autoincrement())
-  userId        Int
-  name          String
-  apiKey        String         @unique
-  disabled      Boolean        @default(false)
-  deleted       Boolean        @default(false)
-  user          User           @relation(fields: [userId], references: [id])
-  conversations Conversation[]
+  id               Int            @id @default(autoincrement())
+  userId           Int
+  name             String
+  apiKey           String         @unique
+  disabled         Boolean        @default(false)
+  deleted          Boolean        @default(false)
+  lastUsed         DateTime?
+  creaditConsumend Int            @default(0)
+  user             User           @relation(fields: [userId], references: [id])
+  conversations    Conversation[]
 }
 
 model Model {
@@ -51,7 +52,6 @@ model Company {
   models  Model[]
 }
 
-
 model Provider {
   id                    Int                    @id @default(autoincrement())
   name                  String
@@ -64,7 +64,7 @@ model ModelProviderMapping {
   modelId         Int
   providerId      Int
   inputTokenCost  Int
-  outputTokenCost Int            // 
+  outputTokenCost Int // 
   model           Model          @relation(fields: [modelId], references: [id])
   provider        Provider       @relation(fields: [providerId], references: [id])
   conversations   Conversation[]
